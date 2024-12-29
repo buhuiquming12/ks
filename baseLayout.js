@@ -9,7 +9,7 @@ const baseLayout = {
                 <div style="border: 1px solid black; width: 20%; padding: 10px;">
                     <slot name="down-left"></slot>
                 </div>
-                <div style="border: 1px solid black; width: 60%; padding: 10px;"overflow-y: auto;>
+                <div style="border: 1px solid black; width: 60%; padding: 10px; overflow-y: auto;">
                     <slot name="down-main"></slot>
                 </div>
                 <div style="border: 1px solid black; width: 20%; padding: 10px;">
