@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>动漫世界 - AnimeWorld</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="anime_data.js"></script>
+    <script src="animeComponent.js"></script>
+    <script src="favoriteList.js"></script>
+    <script src="menuComponent.js"></script>
+    <script src="baseLayout.js"></script>
+    <link href="animeStyle.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <base-layout>
+            <template #up>
+                <h1 style="text-align: center; margin: 0; line-height: 50px; color: #6200EA;">
+                    动漫世界 - AnimeWorld
+                </h1>
+            </template>
+            <template #down-left>
+                <menu-component 
+                    :menus="menus.menus"
+                    class="menu_ul_style"
+                    v-model="current_menu">
+                </menu-component>
+            </template>
+            <template #down-main>
+                <div v-if="current_menu === '首页'">
+                    <anime-component 
+                        v-for="anime in animes"
+                        :anime-info="anime"
+                        image-Style="anime-image"
+                        anime-Style="anime-card"
+                        @update:favorite="toggleFavorite(anime)">
+                    </anime-component>
+                </div>
+                <div v-else-if="current_menu === '收藏夹'">
+                    <favorite-list 
+                        :animes="animes"
+                        @update:favorite="toggleFavorite">
+                    </favorite-list>
+                </div>
+                <div v-else>
+                    <h2>{{ current_menu }}功能开发中...</h2>
+                </div>
+            </template>
+            <template #down-right>
+                <div class="statistics">
+                    <h3>统计信息</h3>
+                    <p>收藏数量: {{ favoriteCount }}</p>
+                    <p>总动漫数: {{ animes.length }}</p>
+                </div>
+            </template>
+        </base-layout>
+    </div>
+    <script>
+        const vm = Vue.createApp({
+            data() {
+                return {
+                    menus: menulist,
+                    animes: anime_info,
+                    current_menu: '首页'
+                }
+            },
+            computed: {
+                favoriteCount() {
+                    return this.animes.filter(anime => anime.favorite).length;
+                }
+            },
+            methods: {
+                toggleFavorite(anime) {
+                    anime.favorite = !anime.favorite;
+                }
+            },
+            components: {
+                baseLayout,
+                menuComponent,
+                animeComponent,
+                favoriteList
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
