@@ -1,6 +1,14 @@
 const animeComponent = {
     props: ['animeInfo', 'imageStyle', 'animeStyle'],
     emits: ['update:favorite'],
+    computed: {
+        buttonStyle() {
+            if (this.animeInfo.favorite) {
+                return { backgroundColor: '#ff4081' }
+            }
+            return {}
+        }
+    },
     template: `
         <div :class="animeStyle">
             <img :src="animeInfo.imagePath" :class="imageStyle"><br>
@@ -10,8 +18,9 @@ const animeComponent = {
                 <p>评分：<span style="color: orange">{{ animeInfo.rating }}</span></p>
                 <p>集数：{{ animeInfo.episodes }}集</p>
                 <button @click="$emit('update:favorite', !animeInfo.favorite)"
-                    :style="animeInfo.favorite ? 'background-color: #ff4081' : ''">
-                    {{ animeInfo.favorite ? '已收藏' : '收藏' }}
+                        v-bind:style="buttonStyle">
+                    <span v-if="animeInfo.favorite">已收藏</span>
+                    <span v-else>收藏</span>
                 </button>
             </div>
         </div>
