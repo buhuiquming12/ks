@@ -9,6 +9,7 @@
     <script src="menuComponent.js"></script>
     <script src="baseLayout.js"></script>
     <script src="rankingList.js"></script>
+    <script src="loginComponent.js"></script>
     <link href="animeStyle.css" rel="stylesheet">
 </head>
 <body>
@@ -50,11 +51,16 @@
                 </div>
             </template>
             <template #down-right>
-                <div class="statistics">
-                    <h3>统计信息</h3>
-                    <p>收藏数量: {{ favoriteCount }}</p>
-                    <p>总动漫数: {{ animes.length }}</p>
-                </div>
+                <template v-if="user==''">
+                    <login-component label="Email" @click="newValue=>user=newValue"></login-component>
+                </template>
+                <template v-else>
+                    <div class="statistics">
+                        <h3>统计信息</h3>
+                        <p>收藏数量: {{ favoriteCount }}</p>
+                        <p>总动漫数: {{ animes.length }}</p>
+                    </div>
+                </template>
             </template>
         </base-layout>
     </div>
@@ -64,7 +70,8 @@
                 return {
                     menus: menulist,
                     animes: anime_info,
-                    current_menu: '首页'
+                    current_menu: '首页',
+                    user:''
                 }
             },
             computed: {
@@ -89,7 +96,8 @@
                 menuComponent,
                 animeComponent,
                 favoriteList,
-                rankingList
+                rankingList,
+                loginComponent
             }
         }).mount('#app');
     </script>
