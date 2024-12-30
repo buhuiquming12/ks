@@ -1,6 +1,5 @@
 .anime-card {
-    border: 1px solid #eee;
-    border-radius: 8px;
+    border: 1px solid black;
     padding: 15px;
     margin: 10px;
     width: 200px;
@@ -22,14 +21,14 @@
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
     border: none;
     padding: 8px 16px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: green;
 }
 
 .favorite-list {
@@ -38,13 +37,10 @@ button:hover {
 
 .favorite-item {
     display: flex;
-    gap: 20px;
     padding: 10px;
-    border-bottom: 1px solid #eee;
 }
 
 .empty-message {
     text-align: center;
-    color: #666;
     padding: 20px;
 }
