@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>动漫世界 - AnimeWorld</title>
     <meta charset="UTF-8">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="anime_data.js"></script>
@@ -15,8 +14,8 @@
     <div id="app">
         <base-layout>
             <template #up>
-                <h1 style="text-align: center; margin: 0; line-height: 50px; color: #6200EA;">
-                    动漫世界 - AnimeWorld
+                <h1 style="text-align: center; margin: 0;">
+                    动漫简介
                 </h1>
             </template>
             <template #down-left>
@@ -36,14 +35,14 @@
                         @update:favorite="toggleFavorite(anime)">
                     </anime-component>
                 </div>
-                <div v-else-if="current_menu === '收藏夹'">
+                <div v-else-if="current_menu === '收藏夹'||current_menu === '已收藏动漫'" >
                     <favorite-list 
                         :animes="animes"
                         @update:favorite="toggleFavorite">
                     </favorite-list>
                 </div>
                 <div v-else>
-                    <h2>{{ current_menu }}功能开发中...</h2>
+                    <h2>功能开发中...</h2>
                 </div>
             </template>
             <template #down-right>
@@ -66,7 +65,14 @@
             },
             computed: {
                 favoriteCount() {
-                    return this.animes.filter(anime => anime.favorite).length;
+                    let count = 0;
+                    for (let i = 0; i < this.animes.length; i++) {
+                        if (this.animes[i].favorite) {
+                            count++;
+                        }
+                    }
+                    return count;
+
                 }
             },
             methods: {

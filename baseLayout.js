@@ -1,4 +1,3 @@
-
 const baseLayout = {
     template: `
         <div style="display: flex; flex-direction: column; min-height: 100vh;">

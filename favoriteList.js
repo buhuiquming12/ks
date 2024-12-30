@@ -2,7 +2,13 @@ const favoriteList = {
     props: ['animes'],
     computed: {
         favoriteAnimes() {
-            return this.animes.filter(anime => anime.favorite);
+            let favoriteAnimes = [];
+                for (let i = 0; i < this.animes.length; i++) {
+                    if (this.animes[i].favorite) {
+                        favoriteAnimes.push(this.animes[i]);
+                    }
+                }
+                return favoriteAnimes;
         }
     },
     template: `
