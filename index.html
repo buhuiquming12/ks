@@ -8,6 +8,7 @@
     <script src="favoriteList.js"></script>
     <script src="menuComponent.js"></script>
     <script src="baseLayout.js"></script>
+    <script src="rankingList.js"></script>
     <link href="animeStyle.css" rel="stylesheet">
 </head>
 <body>
@@ -40,6 +41,9 @@
                         :animes="animes"
                         @update:favorite="toggleFavorite">
                     </favorite-list>
+                </div>
+                <div v-else-if="current_menu === '排行榜' || current_menu === '周排行' || current_menu === '月排行'">
+                    <ranking-list :animes="animes"></ranking-list>
                 </div>
                 <div v-else>
                     <h2>功能开发中...</h2>
@@ -84,7 +88,8 @@
                 baseLayout,
                 menuComponent,
                 animeComponent,
-                favoriteList
+                favoriteList,
+                rankingList
             }
         }).mount('#app');
     </script>
