@@ -52,12 +52,11 @@
         template: `
             <div>
                 <anime-component 
-                    v-for="anime in $root.$data.animes"
-                    :key="anime.title"
+                    v-for="anime in $root.animes"
                     :anime-info="anime"
                     image-Style="anime-image"
                     anime-Style="anime-card"
-                    @update:favorite="$root.toggleFavorite(anime)">
+                    @update:favorite="$root.switchFavorite(anime)">
                 </anime-component>
             </div>
         `
@@ -68,8 +67,8 @@
         },
         template: `
             <favorite-list 
-                :animes="$root.$data.animes"
-                @update:favorite="$root.toggleFavorite">
+                :animes="$root.animes"
+                @update:favorite="$root.switchFavorite">
             </favorite-list>
         `
     }
@@ -78,7 +77,7 @@
             rankingList
         },
         template: `
-            <ranking-list :animes="$root.$data.animes"></ranking-list>
+            <ranking-list :animes="$root.animes"></ranking-list>
         `
     }
     const UnderDevelopment = {
@@ -161,7 +160,7 @@
                 }
             },
             methods: {
-                toggleFavorite(anime) {
+                switchFavorite(anime) {
                     anime.favorite = !anime.favorite;
                 }
             },

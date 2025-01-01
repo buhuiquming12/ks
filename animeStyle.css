@@ -17,7 +17,6 @@
 
 .anime-info h3 {
     margin: 5px 0;
-    color: #333;
 }
 
 .favorite-list {
@@ -26,11 +25,4 @@
 
 .favorite-item {
     display: flex;
-    padding: 10px;
 }
-
-.empty-message {
-    text-align: center;
-    padding: 20px;
-}
-

@@ -6,7 +6,7 @@ const animeComponent = {
             <img :src="animeInfo.imagePath" :class="imageStyle"><br>
             <div class="anime-info">
                 <h3>{{ animeInfo.title }}</h3>
-                <p>作者：{{ animeInfo.director }}</p>
+                <p>作者：{{ animeInfo.author }}</p>
                 <p>评分：<span>{{ animeInfo.rating }}</span></p>
                 <p>集数：{{ animeInfo.episodes }}集</p>
                 <button @click="$emit('update:favorite', !animeInfo.favorite)">

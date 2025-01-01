@@ -1,14 +1,5 @@
 const rankingList = {
     props: ['animes'],
-    computed: {
-        sortedAnimes() {
-            let anime = this.animes.slice();
-            anime.sort(function(a, b) {
-                return parseFloat(b.rating) - parseFloat(a.rating);
-            });
-            return anime; 
-        }
-    },
     template: `
         <div>
             <h2>动漫排行榜</h2>
@@ -20,10 +11,10 @@ const rankingList = {
                     <th>评分</th>
                     <th>集数</th>
                 </tr>
-                <tr v-for="(anime, index) in sortedAnimes" :key="anime.title">
+                <tr v-for="(anime, index) in animes">
                     <td>{{ index + 1 }}</td>
                     <td>{{ anime.title }}</td>
-                    <td>{{ anime.director }}</td>
+                    <td>{{ anime.author }}</td>
                     <td>{{ anime.rating }}</td>
                     <td>{{ anime.episodes }}集</td>
                 </tr>
