@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="anime_data.js"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <script src="all_data.js"></script>
     <script src="animeComponent.js"></script>
     <script src="favoriteList.js"></script>
     <script src="menuComponent.js"></script>
@@ -23,32 +24,11 @@
             <template #down-left>
                 <menu-component 
                     :menus="menus.menus"
-                    class="menu_ul_style"
-                    v-model="current_menu">
+                    class="menu_ul_style">
                 </menu-component>
             </template>
             <template #down-main>
-                <div v-if="current_menu === '首页'">
-                    <anime-component 
-                        v-for="anime in animes"
-                        :anime-info="anime"
-                        image-Style="anime-image"
-                        anime-Style="anime-card"
-                        @update:favorite="toggleFavorite(anime)">
-                    </anime-component>
-                </div>
-                <div v-else-if="current_menu === '收藏夹'||current_menu === '已收藏动漫'" >
-                    <favorite-list 
-                        :animes="animes"
-                        @update:favorite="toggleFavorite">
-                    </favorite-list>
-                </div>
-                <div v-else-if="current_menu === '排行榜' || current_menu === '周排行' || current_menu === '月排行'">
-                    <ranking-list :animes="animes"></ranking-list>
-                </div>
-                <div v-else>
-                    <h2>功能开发中...</h2>
-                </div>
+                <router-view></router-view>
             </template>
             <template #down-right>
                 <template v-if="user==''">
@@ -64,14 +44,109 @@
             </template>
         </base-layout>
     </div>
-    <script>
+<script>
+    const Home = {
+        components: {
+            animeComponent
+        },
+        template: `
+            <div>
+                <anime-component 
+                    v-for="anime in $root.$data.animes"
+                    :key="anime.title"
+                    :anime-info="anime"
+                    image-Style="anime-image"
+                    anime-Style="anime-card"
+                    @update:favorite="$root.toggleFavorite(anime)">
+                </anime-component>
+            </div>
+        `
+    }
+    const FavoriteView = {
+        components: {
+            favoriteList
+        },
+        template: `
+            <favorite-list 
+                :animes="$root.$data.animes"
+                @update:favorite="$root.toggleFavorite">
+            </favorite-list>
+        `
+    }
+    const RankingView = {
+        components: {
+            rankingList
+        },
+        template: `
+            <ranking-list :animes="$root.$data.animes"></ranking-list>
+        `
+    }
+    const UnderDevelopment = {
+        template: '<h2>功能开发中...</h2>'
+    }
+        const routes = [
+            { 
+                path: '/', 
+                name: '首页', 
+                component: Home 
+            },
+            { 
+                path: '/favorite', 
+                name: '收藏夹',
+                component: FavoriteView
+            },
+            { 
+                path: '/favorite', 
+                name: '已收藏动漫',
+                component: FavoriteView
+            },
+            {
+                path: '/category', 
+                name: '观看历史', 
+                component: UnderDevelopment
+            },
+            { 
+                path: '/ranking', 
+                name: '排行榜',
+                component: RankingView
+            },
+            { 
+                path: '/ranking', 
+                name: '周排行',
+                component: RankingView
+            },
+            { 
+                path: '/ranking', 
+                name: '月排行',
+                component: RankingView
+            },
+            {
+                path: '/category', 
+                name: '分类', 
+                component: UnderDevelopment
+            },
+            {
+                path: '/category', 
+                name: '热血', 
+                component: UnderDevelopment
+            },
+            { 
+                path: '/category', 
+                name: '恋爱', 
+                component: UnderDevelopment 
+            },
+            {
+                path: '/category',
+                name: '科幻',
+                component: UnderDevelopment 
+            },
+        ]
         const vm = Vue.createApp({
             data() {
                 return {
                     menus: menulist,
                     animes: anime_info,
-                    current_menu: '首页',
-                    user:''
+                    user: ''
                 }
             },
             computed: {
@@ -83,7 +158,6 @@
                         }
                     }
                     return count;
-
                 }
             },
             methods: {
@@ -99,7 +173,13 @@
                 rankingList,
                 loginComponent
             }
-        }).mount('#app');
+        })
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+        vm.use(router)
+        vm.mount('#app')
     </script>
 </body>
 </html>
